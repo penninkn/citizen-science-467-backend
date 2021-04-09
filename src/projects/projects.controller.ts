@@ -9,7 +9,7 @@ import {
   Res,
 } from '@nestjs/common';
 import { CreateProjectDTO } from './create-project.dto';
-import { ProjectService } from './project.service';
+import { ProjectService } from './projects.service';
 
 @Controller('project')
 export class ProjectController {
@@ -30,7 +30,6 @@ export class ProjectController {
 
   @Post('/create')
   async addCustomer(@Res() res, @Body() createProjectDTO: CreateProjectDTO) {
-    console.log(createProjectDTO.title);
     const project = await this.projectService.addProject(createProjectDTO);
     return res.status(HttpStatus.OK).json({
       message: 'Project has been created successfully',
