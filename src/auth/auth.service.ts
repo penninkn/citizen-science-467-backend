@@ -18,24 +18,24 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async register(userDto: CreateUserDTO): Promise<any> {
+  async register(createUserDto: CreateUserDTO): Promise<any> {
     let status: RegistrationStatus = {
       success: true,
       message: 'Registration successful!',
     };
     try {
-      await this.userService.createUser(userDto);
+      await this.userService.createUser(createUserDto);
     } catch (err) {
       status = {
         success: false,
-        message: err,
+        message: 'Unable to create user. ' + err,
       };
     }
     return status;
   }
 
   async validateUser(payload: JwtPayload): Promise<UserDto> {
-    const user = await this.userService.findByPayload(payload);
+    const user = await this.userService.findByUsername(payload);
     if (!user) {
       throw new HttpException('Invalid token', HttpStatus.UNAUTHORIZED);
     }
@@ -51,7 +51,6 @@ export class AuthService {
 
     return {
       username: user.username,
-      email: user.email,
       ...token,
     };
   }
