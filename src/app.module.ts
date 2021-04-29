@@ -14,6 +14,8 @@ import { ObservationsController } from './observations/observations.controller';
       },
     ),
     ProjectModule,
+    UsersModule,
+    AuthModule
   ],
   controllers: [AppController, ObservationsController],
   providers: [AppService],
