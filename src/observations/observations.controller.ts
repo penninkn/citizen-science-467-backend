@@ -1,4 +1,3 @@
-import { CreateObservationDTO } from './create-observation.dto';
 import {
     Body,
     Controller,
@@ -8,20 +7,39 @@ import {
     Param,
     Post,
     Res,
-  } from '@nestjs/common';
+} from '@nestjs/common';
 
 
-
-@Controller('observations')
-export class ObservationsController {
-    @Get()
-    findAll(): string {
-        return 'get all observations';
+import { ObservationService } from './observations.service';
+import { CreateObservationDTO } from './create-observation.dto';
+  
+    
+  @Controller('observation')
+  export class ObservationController {
+    constructor(private observationService: ObservationService) {}
+  
+    @Get('observations')
+    async getAllObservations(@Res() res) {
+      const observations = await this.observationService.getAllObservations();
+      return res.status(HttpStatus.OK).json(observations);
     }
-
-    @Post()
-    create(@Body() CreateObservationDTO: CreateObservationDTO): string {
-        return `Name: ${CreateObservationDTO.title} Text: ${CreateObservationDTO.text}`;
+  
+    // @Get(':projectId')
+    // async getProject(@Res() res, @Param('projectId') projectId) {
+    //   const project = await this.projectService.getProject(projectId);
+    //   if (!project) throw new NotFoundException('Customer does not exist!');
+    //   return res.status(HttpStatus.OK).json(project);
+    //   // Project does not exist? JN
+    // }
+  
+    // addProject? JN
+    @Post('/create')
+    async addObservation(@Res() res, @Body() CreateObservationDTO: CreateObservationDTO) {
+      const observation = await this.observationService.addObservation(CreateObservationDTO);
+      return res.status(HttpStatus.OK).json({
+        message: 'Project has been created successfully',
+        observation,
+      });
     }
-
-}
+  }
+  

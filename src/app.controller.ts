@@ -1,3 +1,4 @@
+import { ObservationController } from './observations/observations.controller';
 import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
 

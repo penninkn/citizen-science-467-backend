@@ -26,8 +26,10 @@ export class ProjectController {
     const project = await this.projectService.getProject(projectId);
     if (!project) throw new NotFoundException('Customer does not exist!');
     return res.status(HttpStatus.OK).json(project);
+    // Project does not exist? JN
   }
 
+  // addProject? JN
   @Post('/create')
   async addCustomer(@Res() res, @Body() createProjectDTO: CreateProjectDTO) {
     const project = await this.projectService.addProject(createProjectDTO);
