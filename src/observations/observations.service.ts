@@ -18,12 +18,17 @@ export class ObservationService {
     return observations;
   }
 
-//   // Get a single project
-//   async getProject(projectID): Promise<Project> {
-//     const project = await this.projectModel.findById(projectID).exec();
-//     return project;
-//   }
+  // Get a single project
+  async getObservation(observationID): Promise<Observation> {
+    const observation = await this.observationModel.findById(observationID).exec();
+    return observation;
+  }
 
+// Delete an Observation
+async deleteObservation(observationID): Promise<any> {
+  const deleteObservation = await this.observationModel.findByIdAndRemove(observationID);
+  return deleteObservation;
+}
   // post a single project
   async addObservation(CreateObservationDTO: CreateObservationDTO): Promise<Observation> {
     const newObservation = new this.observationModel(CreateObservationDTO);
@@ -43,9 +48,4 @@ export class ObservationService {
 //     return updatedProject;
 //   }
 
-//   // Delete a Project
-//   async deleteProject(projectID): Promise<any> {
-//     const deletedProject = await this.projectModel.findByIdAndRemove(projectID);
-//     return deletedProject;
-//   }
 }

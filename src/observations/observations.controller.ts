@@ -2,6 +2,7 @@ import {
     Body,
     Controller,
     Get,
+    Delete,
     HttpStatus,
     NotFoundException,
     Param,
@@ -24,13 +25,20 @@ import { CreateObservationDTO } from './create-observation.dto';
       return res.status(HttpStatus.OK).json(observations);
     }
   
-    // @Get(':projectId')
-    // async getProject(@Res() res, @Param('projectId') projectId) {
-    //   const project = await this.projectService.getProject(projectId);
-    //   if (!project) throw new NotFoundException('Customer does not exist!');
-    //   return res.status(HttpStatus.OK).json(project);
-    //   // Project does not exist? JN
-    // }
+    @Get(':observationId')
+    async getObservation(@Res() res, @Param('observationId') observationId) {
+      const observation = await this.observationService.getObservation(observationId);
+      if (!observation) throw new NotFoundException('Observation does not exist!');
+      return res.status(HttpStatus.OK).json(observation);
+    }
+
+    @Delete(':observationId')
+    async deleteObservation(@Res() res, @Param('observationId') observationId) {
+      const observation = await this.observationService.deleteObservation(observationId);
+      if (!observation) throw new NotFoundException('Observation does not exist!');
+      return res.status(HttpStatus.OK).json(observation);
+      // Project does not exist? JN
+    }
   
     // addProject? JN
     @Post('/create')
