@@ -12,13 +12,13 @@ export class ObservationService {
     private readonly observationModel: Model<ObservationDocument>,
   ) {}
 
-  // fetch all projects
+  // Get all observations
   async getAllObservations(): Promise<Observation[]> {
     const observations = await this.observationModel.find().exec();
     return observations;
   }
 
-  // Get a single project
+  // Get a single observation
   async getObservation(observationID): Promise<Observation> {
     const observation = await this.observationModel.findById(observationID).exec();
     return observation;
@@ -29,23 +29,23 @@ async deleteObservation(observationID): Promise<any> {
   const deleteObservation = await this.observationModel.findByIdAndRemove(observationID);
   return deleteObservation;
 }
-  // post a single project
+  // Create a new observation
   async addObservation(CreateObservationDTO: CreateObservationDTO): Promise<Observation> {
     const newObservation = new this.observationModel(CreateObservationDTO);
     return newObservation.save();
   }
 
-//   // Edit Project details
-//   async updateProject(
-//     projectID: any,
-//     createProjectDTO: CreateProjectDTO,
-//   ): Promise<Project> {
-//     const updatedProject = await this.projectModel.findByIdAndUpdate(
-//       projectID,
-//       createProjectDTO,
-//       { new: true },
-//     );
-//     return updatedProject;
-//   }
+  // Edit an observation's details
+  async updateObservation(
+    observationID: any ,
+    createObservationDTO: CreateObservationDTO,
+  ): Promise<Observation> {
+    const updatedObservation = await this.observationModel.findByIdAndUpdate(
+      observationID,
+      createObservationDTO,
+      { new: true },
+    );
+    return updatedObservation;
+  }
 
 }
