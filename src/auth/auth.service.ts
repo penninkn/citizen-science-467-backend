@@ -34,8 +34,8 @@ export class AuthService {
     return status;
   }
 
-  async validateUser(payload: JwtPayload): Promise<UserDto> {
-    const user = await this.userService.findByUsername(payload);
+  async validateUser(username: string): Promise<UserDto> {
+    const user = await this.userService.findByUsername(username);
     if (!user) {
       throw new HttpException('Invalid token', HttpStatus.UNAUTHORIZED);
     }
