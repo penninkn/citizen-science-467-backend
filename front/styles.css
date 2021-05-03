@@ -1,0 +1,59 @@
+body {
+  background-image: radial-gradient(rgba(255, 233, 91, 0.24), rgba(253, 192, 26, 0.35)), url('tree-4373601_640.png');
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
+  min-height: 100%;
+}
+
+#site-container {
+  margin: auto;
+  width: 70%;
+  min-height: 100%;
+}
+
+.btn-round-red {
+  background-color: #d40d38;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  text-align: center;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.btn-round-blue {
+  background-color: #0198E9;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  text-align: center;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.btn-blue-outline {
+  color: #0198E9;
+  background: transparent;
+  border: 2px solid #0198E9;
+  padding: 10px 15px;
+  text-align: center;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.btn-blue-outline-large {
+  color: #0198E9;
+  background: transparent;
+  border: 2px solid #0198E9;
+  padding: 10px 15px;
+  text-align: center;
+  border-radius: 8px;
+  font-size: 24px;
+}
+
+@media only screen and (max-width: 600px) {
+  #site-container {
+    width: 90%;
+  }
+}
+
+/*# sourceMappingURL=styles.css.map*/

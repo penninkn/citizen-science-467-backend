@@ -8,8 +8,8 @@ import { ObservationsModule } from './observations/observations.module';
 
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
-import { ObservationController } from './observations/observations.controller';
-import { ObservationService } from './observations/observations.service';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -19,6 +19,9 @@ import { ObservationService } from './observations/observations.service';
         useNewUrlParser: true,
       },
     ),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'front'),
+    }),
     ProjectModule,
     ObservationsModule,
     UsersModule,
