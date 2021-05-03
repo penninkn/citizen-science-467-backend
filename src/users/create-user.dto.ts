@@ -1,5 +1,3 @@
-import { Observation } from 'src/observations/observations.schema';
-
 export class CreateUserDTO {
   readonly first_name: string;
   readonly last_name: string;
@@ -9,5 +7,4 @@ export class CreateUserDTO {
   readonly password: string;
   readonly admin: boolean;
   readonly created_at: Date;
-  readonly observations: Observation[];
 }
