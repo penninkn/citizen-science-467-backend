@@ -26,6 +26,7 @@ export class ProjectService {
   // post a single project
   async addProject(createProjectDTO: CreateProjectDTO): Promise<Project> {
     const newProject = new this.projectModel(createProjectDTO);
+    console.log(newProject);
     return newProject.save();
   }
 
