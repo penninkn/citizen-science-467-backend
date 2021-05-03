@@ -1,5 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import { Observation } from 'src/observations/observations.schema';
+import * as mongoose from 'mongoose';
 
 export type UserDocument = User & Document;
 
@@ -19,8 +21,10 @@ export class User {
   password: string;
   @Prop()
   admin: boolean;
-  @Prop()
-  created_at: Date;
+  @Prop({
+    type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Observation' }],
+  })
+  observations: Observation[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

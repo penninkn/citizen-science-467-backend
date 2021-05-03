@@ -29,9 +29,8 @@ export class ProjectController {
     // Project does not exist? JN
   }
 
-  // addProject? JN
   @Post('/create')
-  async addCustomer(@Res() res, @Body() createProjectDTO: CreateProjectDTO) {
+  async addProject(@Res() res, @Body() createProjectDTO: CreateProjectDTO) {
     const project = await this.projectService.addProject(createProjectDTO);
     return res.status(HttpStatus.OK).json({
       message: 'Project has been created successfully',
