@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  Put,
   HttpStatus,
   NotFoundException,
   Param,
@@ -29,6 +30,23 @@ export class ProjectController {
     // Project does not exist? JN
   }
 
+  @Put(':projectId')
+  async updateProject(
+    @Res() res,
+    @Param('projectId') projectId,
+    @Body() CreateProjectDTO: CreateProjectDTO,
+  ) {
+    const updatedProject = await this.projectService.updateProject(
+      projectId,
+      CreateProjectDTO,
+    );
+    return res.status(HttpStatus.OK).json({
+      message: 'Project has been updated successfully',
+      updatedProject,
+    });
+  }
+
+
   // addProject? JN
   @Post('/create')
   async addCustomer(@Res() res, @Body() createProjectDTO: CreateProjectDTO) {
@@ -38,4 +56,8 @@ export class ProjectController {
       project,
     });
   }
+
+  
+
+
 }
