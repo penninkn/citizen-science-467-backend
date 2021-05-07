@@ -1,18 +1,18 @@
 import {
-    Body,
-    Controller,
-    Get,
-    Put,
-    HttpStatus,
-    NotFoundException,
-    Param,
-    Post,
-    Res,
+  Body,
+  Controller,
+  Get,
+  Put,
+  HttpStatus,
+  NotFoundException,
+  Param,
+  Post,
+  Res,
 } from '@nestjs/common';
 
 import { CreateProjectDTO } from './create-project.dto';
-import { UpdateProjectDTO } from './update-project.dto';
 import { ProjectService } from './projects.service';
+import { UpdateProjectDTO } from './update-project.dto';
 
 @Controller('project')
 export class ProjectController {
@@ -36,18 +36,17 @@ export class ProjectController {
   async updateProject(
     @Res() res,
     @Param('projectId') projectId,
-    @Body() UpdateProjectDTO: UpdateProjectDTO,
+    @Body() updateProjectDTO: UpdateProjectDTO,
   ) {
     const updatedProject = await this.projectService.updateProject(
       projectId,
-      UpdateProjectDTO,
+      updateProjectDTO,
     );
     return res.status(HttpStatus.OK).json({
       message: 'Project has been updated successfully',
       updatedProject,
     });
   }
-
 
   // addProject? JN
   @Post('/create')
@@ -58,8 +57,4 @@ export class ProjectController {
       project,
     });
   }
-
-  
-
-
 }

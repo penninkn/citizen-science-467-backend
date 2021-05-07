@@ -4,7 +4,6 @@ import { InjectModel } from '@nestjs/mongoose';
 import { CreateObservationDTO } from './create-observation.dto';
 import { Observation, ObservationDocument } from './observations.schema';
 
-
 @Injectable()
 export class ObservationService {
   constructor(
@@ -20,32 +19,37 @@ export class ObservationService {
 
   // Get a single observation
   async getObservation(observationID): Promise<Observation> {
-    const observation = await this.observationModel.findById(observationID).exec();
+    const observation = await this.observationModel
+      .findById(observationID)
+      .exec();
     return observation;
   }
 
-// Delete an Observation
-async deleteObservation(observationID): Promise<any> {
-  const deleteObservation = await this.observationModel.findByIdAndRemove(observationID);
-  return deleteObservation;
-}
+  // Delete an Observation
+  async deleteObservation(observationID): Promise<any> {
+    const deleteObservation = await this.observationModel.findByIdAndRemove(
+      observationID,
+    );
+    return deleteObservation;
+  }
   // Create a new observation
-  async addObservation(CreateObservationDTO: CreateObservationDTO): Promise<Observation> {
-    const newObservation = new this.observationModel(CreateObservationDTO);
+  async addObservation(
+    createObservationDTO: CreateObservationDTO,
+  ): Promise<any> {
+    const newObservation = new this.observationModel(createObservationDTO);
     return newObservation.save();
   }
 
   // Edit an observation's details
-  async updateObservation(
-    observationID: any ,
-    createObservationDTO: CreateObservationDTO,
-  ): Promise<Observation> {
-    const updatedObservation = await this.observationModel.findByIdAndUpdate(
-      observationID,
-      createObservationDTO,
-      { new: true },
-    );
-    return updatedObservation;
-  }
-
+  // async updateObservation(
+  //   observationID: any,
+  //   createObservationDTO: CreateObservationDTO,
+  // ): Promise<Observation> {
+  //   const updatedObservation = await this.observationModel.findByIdAndUpdate(
+  //     observationID,
+  //     createObservationDTO,
+  //     { new: true },
+  //   );
+  //   return updatedObservation;
+  // }
 }
