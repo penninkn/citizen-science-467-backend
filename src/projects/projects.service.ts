@@ -9,13 +9,14 @@ export class ProjectService {
   constructor(
     @InjectModel(Project.name)
     private readonly projectModel: Model<ProjectDocument>,
-  ) {}
+  ) { }
 
   // fetch all projects
   async getAllProjects(): Promise<Project[]> {
     const projects = await this.projectModel.find().exec();
     return projects;
   }
+
 
   // Get a single project
   async getProject(projectID): Promise<Project> {

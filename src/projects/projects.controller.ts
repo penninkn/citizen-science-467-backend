@@ -13,7 +13,7 @@ import { ProjectService } from './projects.service';
 
 @Controller('project')
 export class ProjectController {
-  constructor(private projectService: ProjectService) {}
+  constructor(private projectService: ProjectService) { }
 
   @Get('projects')
   async getAllProjects(@Res() res) {
@@ -21,12 +21,12 @@ export class ProjectController {
     return res.status(HttpStatus.OK).json(projects);
   }
 
+
   @Get(':projectId')
   async getProject(@Res() res, @Param('projectId') projectId) {
     const project = await this.projectService.getProject(projectId);
-    if (!project) throw new NotFoundException('Customer does not exist!');
+    if (!project) throw new NotFoundException('Project does not exist!');
     return res.status(HttpStatus.OK).json(project);
-    // Project does not exist? JN
   }
 
   // addProject? JN
