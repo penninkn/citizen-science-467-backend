@@ -18,6 +18,11 @@ export class ProjectService {
     return projects;
   }
 
+  // Get projects by type
+  async getProjectsByType(type): Promise<Project[]> {
+    const projects = await this.projectModel.find(type).exec();
+    return projects;
+  }
 
   // Get a single project
   async getProject(projectID): Promise<Project> {
@@ -35,7 +40,7 @@ export class ProjectService {
   async updateProject(
     projectID: any,
     updateProjectDTO: UpdateProjectDTO,
-    ): Promise<Project> {
+  ): Promise<Project> {
     const updatedProject = await this.projectModel.findByIdAndUpdate(
       projectID,
       updateProjectDTO,
@@ -50,3 +55,5 @@ export class ProjectService {
     return deletedProject;
   }
 }
+
+

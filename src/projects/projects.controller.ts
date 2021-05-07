@@ -1,18 +1,20 @@
 import {
-    Body,
-    Controller,
-    Get,
-    Put,
-    HttpStatus,
-    NotFoundException,
-    Param,
-    Post,
-    Res,
+  Body,
+  Controller,
+  Get,
+  Put,
+  HttpStatus,
+  NotFoundException,
+  Param,
+  Post,
+  Res,
+  Query
 } from '@nestjs/common';
 
 import { CreateProjectDTO } from './create-project.dto';
 import { UpdateProjectDTO } from './update-project.dto';
 import { ProjectService } from './projects.service';
+import { query } from 'express';
 
 @Controller('project')
 export class ProjectController {
@@ -21,6 +23,12 @@ export class ProjectController {
   @Get('projects')
   async getAllProjects(@Res() res) {
     const projects = await this.projectService.getAllProjects();
+    return res.status(HttpStatus.OK).json(projects);
+  }
+
+  @Get('type')
+  async GetByType(@Res() res, @Query() query) {
+    const projects = await this.projectService.getProjectsByType(query);
     return res.status(HttpStatus.OK).json(projects);
   }
 
@@ -59,7 +67,7 @@ export class ProjectController {
     });
   }
 
-  
+
 
 
 }
