@@ -13,10 +13,16 @@ import {
 
 import { ObservationService } from './observations.service';
 import { CreateObservationDTO } from './create-observation.dto';
+import { ProjectService } from 'src/projects/projects.service';
+import { UsersService } from 'src/users/users.service';
 
 @Controller('observation')
 export class ObservationController {
-  constructor(private observationService: ObservationService) {}
+  constructor(
+    private observationService: ObservationService,
+    private projectService: ProjectService,
+    private userService: UsersService,
+  ) {}
 
   @Get('observations')
   async getAllObservations(@Res() res) {
@@ -47,32 +53,40 @@ export class ObservationController {
     });
   }
 
-  @Put(':observationId')
-  async updateObservation(
-    @Res() res,
-    @Param('observationId') observationId,
-    @Body() CreateObservationDTO: CreateObservationDTO,
-  ) {
-    const updatedObservation = await this.observationService.updateObservation(
-      observationId,
-      CreateObservationDTO,
-    );
-    return res.status(HttpStatus.OK).json({
-      message: 'Project has been updated successfully',
-      updatedObservation,
-    });
-  }
+  // @Put(':observationId')
+  // async updateObservation(
+  //   @Res() res,
+  //   @Param('observationId') observationId,
+  //   @Body() createObservationDTO: CreateObservationDTO,
+  // ) {
+  //   const updatedObservation = await this.observationService.updateObservation(
+  //     observationId,
+  //     createObservationDTO,
+  //   );
+  //   return res.status(HttpStatus.OK).json({
+  //     message: 'Project has been updated successfully',
+  //     updatedObservation,
+  //   });
+  // }
 
   @Post('/create')
   async addObservation(
     @Res() res,
-    @Body() CreateObservationDTO: CreateObservationDTO,
+    @Body() createObservationDTO: CreateObservationDTO,
   ) {
     const observation = await this.observationService.addObservation(
-      CreateObservationDTO,
+      createObservationDTO,
+    );
+    await this.projectService.addProjectObservation(
+      observation._id,
+      observation.project,
+    );
+    await this.userService.addUserObservation(
+      observation._id,
+      observation.user,
     );
     return res.status(HttpStatus.OK).json({
-      message: 'Project has been created successfully',
+      message: 'Observation has been created successfully',
       observation,
     });
   }
