@@ -10,5 +10,6 @@ import { Project, ProjectSchema } from './project.schema';
   ],
   providers: [ProjectService],
   controllers: [ProjectController],
+  exports: [ProjectService],
 })
 export class ProjectModule {}
