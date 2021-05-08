@@ -20,6 +20,9 @@ export class UsersService {
       this.findByUsername({ username }),
     ]);
 
+    console.log(createUserDto);
+    console.log(emailInDatabase);
+
     if (emailInDatabase) {
       throw new HttpException(
         'A user with this email already exists',
@@ -53,7 +56,7 @@ export class UsersService {
       email: user.email,
       first_name: user.first_name,
       last_name: user.last_name,
-      admin: user.admin,
+      admin: user.admin
     };
     return userDto;
   }
@@ -67,18 +70,10 @@ export class UsersService {
     return false;
   }
 
-  async findByUsername(username: any): Promise<UserDto> {
+  async findByUsername( username: any): Promise<UserDto> {
     const user = await this.userModel.findOne({
       username: username,
     });
     return user;
-  }
-
-  async addUserObservation(observationId, userId): Promise<void> {
-    await this.userModel.findById(userId).updateOne({
-      $push: {
-        observations: observationId,
-      },
-    });
   }
 }

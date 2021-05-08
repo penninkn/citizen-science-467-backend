@@ -6,6 +6,4 @@ export class CreateObservationDTO {
   readonly latitude: string;
   readonly longitude: string;
   readonly date: Date;
-  readonly project: string;
-  readonly user: string;
 }

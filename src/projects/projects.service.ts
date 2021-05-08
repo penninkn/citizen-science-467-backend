@@ -34,7 +34,7 @@ export class ProjectService {
   async updateProject(
     projectID: any,
     updateProjectDTO: UpdateProjectDTO,
-  ): Promise<Project> {
+    ): Promise<Project> {
     const updatedProject = await this.projectModel.findByIdAndUpdate(
       projectID,
       updateProjectDTO,
@@ -47,13 +47,5 @@ export class ProjectService {
   async deleteProject(projectID): Promise<any> {
     const deletedProject = await this.projectModel.findByIdAndRemove(projectID);
     return deletedProject;
-  }
-
-  async addProjectObservation(observationId, projectId): Promise<void> {
-    await this.projectModel.findById(projectId).update({
-      $push: {
-        observations: observationId,
-      },
-    });
   }
 }
