@@ -13,7 +13,6 @@ export class UsersService {
   ) {}
 
   async createUser(createUserDto: CreateUserDTO): Promise<User> {
-    console.log(createUserDto);
     const { email, username } = createUserDto;
     const [emailInDatabase, usernameTaken] = await Promise.all([
       this.findByEmail({ email }),
@@ -33,15 +32,12 @@ export class UsersService {
         HttpStatus.BAD_REQUEST,
       );
     }
-    console.log(emailInDatabase, usernameTaken);
     const newUser = new this.userModel(createUserDto);
     return newUser.save();
   }
 
   async findByLogin(username, password): Promise<UserDto> {
-    console.log('findbyLogin: ' + username + password);
     const user = await this.userModel.findOne({ username }).exec();
-    console.log('findbyLogin: ' + user);
     if (!user) {
       throw new HttpException('User not found', HttpStatus.UNAUTHORIZED);
     }
@@ -62,7 +58,6 @@ export class UsersService {
   }
 
   async findByEmail({ email }: any): Promise<boolean> {
-    console.log('in find by email');
     const found = await this.userModel.findOne({ email }).exec();
     if (found) {
       return true;
@@ -72,9 +67,7 @@ export class UsersService {
   }
 
   async findByUsername({ username }: any): Promise<UserDto> {
-    console.log('in find by username');
     const user = await this.userModel.findOne({ username }).exec();
-    console.log('user: ' + user);
     return user;
   }
 
