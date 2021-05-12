@@ -10,11 +10,17 @@ export class ProjectService {
   constructor(
     @InjectModel(Project.name)
     private readonly projectModel: Model<ProjectDocument>,
-  ) {}
+  ) { }
 
   // fetch all projects
   async getAllProjects(): Promise<Project[]> {
     const projects = await this.projectModel.find().exec();
+    return projects;
+  }
+
+  // Get projects by type
+  async getProjectsByType(type): Promise<Project[]> {
+    const projects = await this.projectModel.find(type).exec();
     return projects;
   }
 
@@ -57,3 +63,5 @@ export class ProjectService {
     });
   }
 }
+
+
