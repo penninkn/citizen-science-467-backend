@@ -2,7 +2,6 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateUserDTO } from './create-user.dto';
-import { LoginUserDto } from './login-user.dto';
 import { UserDto } from './user.dto';
 import { User, UserDocument } from './user.schema';
 
@@ -37,8 +36,8 @@ export class UsersService {
     return newUser.save();
   }
 
-  async findByLogin({ username, password }: LoginUserDto): Promise<UserDto> {
-    const user = await this.userModel.findOne({ username: username }).exec();
+  async findByLogin(username, password): Promise<UserDto> {
+    const user = await this.userModel.findOne({ username }).exec();
     if (!user) {
       throw new HttpException('User not found', HttpStatus.UNAUTHORIZED);
     }
@@ -67,10 +66,8 @@ export class UsersService {
     return false;
   }
 
-  async findByUsername(username: any): Promise<UserDto> {
-    const user = await this.userModel.findOne({
-      username: username,
-    });
+  async findByUsername({ username }: any): Promise<UserDto> {
+    const user = await this.userModel.findOne({ username }).exec();
     return user;
   }
 
