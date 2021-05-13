@@ -1,3 +1,4 @@
+import { UpdateObservationDTO } from './update-observation.dto';
 import { Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
@@ -40,16 +41,16 @@ export class ObservationService {
     return newObservation.save();
   }
 
-  // Edit an observation's details
-  // async updateObservation(
-  //   observationID: any,
-  //   createObservationDTO: CreateObservationDTO,
-  // ): Promise<Observation> {
-  //   const updatedObservation = await this.observationModel.findByIdAndUpdate(
-  //     observationID,
-  //     createObservationDTO,
-  //     { new: true },
-  //   );
-  //   return updatedObservation;
-  // }
+//   Edit an observation's details
+  async updateObservation(
+    observationID: any,
+    updateObservationDTO: UpdateObservationDTO,
+  ): Promise<Observation> {
+    const updatedObservation = await this.observationModel.findByIdAndUpdate(
+      observationID,
+      updateObservationDTO,
+      { new: true },
+    );
+    return updatedObservation;
+  }
 }
