@@ -6,6 +6,4 @@ export class UpdateObservationDTO {
   latitude: string;
   longitude: string;
   date: Date;
-  //project: string;
-  //readonly user: string;
 }
