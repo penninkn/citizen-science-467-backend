@@ -4,7 +4,6 @@ import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { CreateProjectDTO } from 'src/projects/create-project.dto';
 import { Project, ProjectDocument } from './project.schema';
-import { Observation } from 'src/observations/observations.schema';
 
 @Injectable()
 export class ProjectService {
@@ -31,29 +30,6 @@ export class ProjectService {
     return project;
   }
 
-  async getObservationsByProject(projectId): Promise<Observation[]> {
-    const project = await this.projectModel
-      .findById(projectId)
-      .populate('observations')
-      .exec();
-    return project.observations;
-  }
-
-  async getObservationsByProjectAndUser(
-    projectID,
-    userId,
-  ): Promise<Observation[]> {
-    const project = await this.projectModel
-      .findById(projectID)
-      .populate({
-        path: 'observations',
-        match: { user: userId },
-      })
-      .exec();
-    console.log(project.observations);
-    return project.observations;
-  }
-
   // post a single project
   async addProject(createProjectDTO: CreateProjectDTO): Promise<Project> {
     const newProject = new this.projectModel(createProjectDTO);
@@ -77,13 +53,5 @@ export class ProjectService {
   async deleteProject(projectID): Promise<any> {
     const deletedProject = await this.projectModel.findByIdAndRemove(projectID);
     return deletedProject;
-  }
-
-  async addProjectObservation(observationId, projectId): Promise<void> {
-    await this.projectModel.findById(projectId).update({
-      $push: {
-        observations: observationId,
-      },
-    });
   }
 }

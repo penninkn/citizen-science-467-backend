@@ -40,6 +40,17 @@ export class ObservationService {
     return newObservation.save();
   }
 
+  async getObservationsByProject(projectId) {
+    return await this.observationModel.find({ project: projectId });
+  }
+
+  async getObservationsByProjectAndUser(projectId, userId) {
+    return await this.observationModel.find({
+      project: projectId,
+      user: userId,
+    });
+  }
+
   // Edit an observation's details
   // async updateObservation(
   //   observationID: any,

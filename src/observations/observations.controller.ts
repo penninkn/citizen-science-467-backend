@@ -45,7 +45,7 @@ export class ObservationController {
     @Res() res,
     @Param('projectId') projectId,
   ): Promise<Observation[]> {
-    const observations = await this.projectService.getObservationsByProject(
+    const observations = await this.observationService.getObservationsByProject(
       projectId,
     );
     return res.status(HttpStatus.OK).json(observations);
@@ -58,7 +58,7 @@ export class ObservationController {
   ): Promise<any> {
     const username = body.user;
     const user = await this.userService.findByUsername({ username });
-    const observations = await this.projectService.getObservationsByProjectAndUser(
+    const observations = await this.observationService.getObservationsByProjectAndUser(
       body.p_id,
       user._id,
     );
@@ -101,10 +101,6 @@ export class ObservationController {
   ) {
     const observation = await this.observationService.addObservation(
       createObservationDTO,
-    );
-    await this.projectService.addProjectObservation(
-      observation._id,
-      observation.project,
     );
     return res.status(HttpStatus.OK).json({
       message: 'Observation has been created successfully',
