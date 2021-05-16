@@ -4,13 +4,14 @@ import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { CreateProjectDTO } from 'src/projects/create-project.dto';
 import { Project, ProjectDocument } from './project.schema';
+import { Observation } from 'src/observations/observations.schema';
 
 @Injectable()
 export class ProjectService {
   constructor(
     @InjectModel(Project.name)
     private readonly projectModel: Model<ProjectDocument>,
-  ) { }
+  ) {}
 
   // fetch all projects
   async getAllProjects(): Promise<Project[]> {
@@ -28,6 +29,29 @@ export class ProjectService {
   async getProject(projectID): Promise<Project> {
     const project = await this.projectModel.findById(projectID).exec();
     return project;
+  }
+
+  async getObservationsByProject(projectId): Promise<Observation[]> {
+    const project = await this.projectModel
+      .findById(projectId)
+      .populate('observations')
+      .exec();
+    return project.observations;
+  }
+
+  async getObservationsByProjectAndUser(
+    projectID,
+    userId,
+  ): Promise<Observation[]> {
+    const project = await this.projectModel
+      .findById(projectID)
+      .populate({
+        path: 'observations',
+        match: { user: userId },
+      })
+      .exec();
+    console.log(project.observations);
+    return project.observations;
   }
 
   // post a single project
@@ -63,5 +87,3 @@ export class ProjectService {
     });
   }
 }
-
-

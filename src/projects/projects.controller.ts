@@ -8,18 +8,16 @@ import {
   Param,
   Post,
   Res,
-  Query
+  Query,
 } from '@nestjs/common';
 
 import { CreateProjectDTO } from './create-project.dto';
 import { ProjectService } from './projects.service';
-import { query } from 'express';
 import { UpdateProjectDTO } from './update-project.dto';
-
 
 @Controller('project')
 export class ProjectController {
-  constructor(private projectService: ProjectService) { }
+  constructor(private projectService: ProjectService) {}
 
   @Get('projects')
   async getAllProjects(@Res() res) {
@@ -32,7 +30,6 @@ export class ProjectController {
     const projects = await this.projectService.getProjectsByType(query);
     return res.status(HttpStatus.OK).json(projects);
   }
-
 
   @Get(':projectId')
   async getProject(@Res() res, @Param('projectId') projectId) {
@@ -66,5 +63,4 @@ export class ProjectController {
       project,
     });
   }
-
 }
