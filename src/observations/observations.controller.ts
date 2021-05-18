@@ -2,7 +2,6 @@ import {
   Body,
   Controller,
   Get,
-  Put,
   Delete,
   HttpStatus,
   NotFoundException,
@@ -15,6 +14,7 @@ import { ObservationService } from './observations.service';
 import { CreateObservationDTO } from './create-observation.dto';
 import { ProjectService } from 'src/projects/projects.service';
 import { UsersService } from 'src/users/users.service';
+import { Observation } from './observations.schema';
 
 @Controller('observation')
 export class ObservationController {
@@ -38,6 +38,31 @@ export class ObservationController {
     if (!observation)
       throw new NotFoundException('Observation does not exist!');
     return res.status(HttpStatus.OK).json(observation);
+  }
+
+  @Get('project/:projectId')
+  async getObservationsByProject(
+    @Res() res,
+    @Param('projectId') projectId,
+  ): Promise<Observation[]> {
+    const observations = await this.observationService.getObservationsByProject(
+      projectId,
+    );
+    return res.status(HttpStatus.OK).json(observations);
+  }
+
+  @Post('project/user')
+  async getObservationsByProjectAndUser(
+    @Res() res,
+    @Body() body,
+  ): Promise<any> {
+    const username = body.user;
+    const user = await this.userService.findByUsername({ username });
+    const observations = await this.observationService.getObservationsByProjectAndUser(
+      body.p_id,
+      user._id,
+    );
+    return res.status(HttpStatus.OK).json(observations);
   }
 
   @Delete(':observationId')
@@ -76,14 +101,6 @@ export class ObservationController {
   ) {
     const observation = await this.observationService.addObservation(
       createObservationDTO,
-    );
-    await this.projectService.addProjectObservation(
-      observation._id,
-      observation.project,
-    );
-    await this.userService.addUserObservation(
-      observation._id,
-      observation.user,
     );
     return res.status(HttpStatus.OK).json({
       message: 'Observation has been created successfully',

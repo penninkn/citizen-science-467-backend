@@ -9,5 +9,4 @@ export class CreateUserDTO {
   readonly password: string;
   readonly admin: boolean;
   readonly created_at: Date;
-  readonly observations: Observation[];
 }
