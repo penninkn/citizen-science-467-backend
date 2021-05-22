@@ -48,6 +48,7 @@ export class UsersService {
     }
 
     const userDto: UserDto = {
+      _id: user._id,
       username: user.username,
       email: user.email,
       first_name: user.first_name,
@@ -69,13 +70,5 @@ export class UsersService {
   async findByUsername({ username }: any): Promise<UserDto> {
     const user = await this.userModel.findOne({ username }).exec();
     return user;
-  }
-
-  async addUserObservation(observationId, userId): Promise<void> {
-    await this.userModel.findById(userId).updateOne({
-      $push: {
-        observations: observationId,
-      },
-    });
   }
 }

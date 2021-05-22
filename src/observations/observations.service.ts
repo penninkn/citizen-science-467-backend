@@ -41,7 +41,7 @@ export class ObservationService {
     return newObservation.save();
   }
 
-//   Edit an observation's details
+  //   Edit an observation's details
   async updateObservation(
     observationID: any,
     updateObservationDTO: UpdateObservationDTO,
@@ -53,4 +53,16 @@ export class ObservationService {
     );
     return updatedObservation;
   }
+
+  async getObservationsByProject(projectId) {
+    return await this.observationModel.find({ project: projectId });
+  }
+
+  async getObservationsByProjectAndUser(projectId, userId) {
+    return await this.observationModel.find({
+      project: projectId,
+      user: userId,
+    });
+  }
+
 }

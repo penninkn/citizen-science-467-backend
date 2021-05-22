@@ -10,7 +10,7 @@ export class ProjectService {
   constructor(
     @InjectModel(Project.name)
     private readonly projectModel: Model<ProjectDocument>,
-  ) { }
+  ) {}
 
   // fetch all projects
   async getAllProjects(): Promise<Project[]> {
@@ -54,14 +54,4 @@ export class ProjectService {
     const deletedProject = await this.projectModel.findByIdAndRemove(projectID);
     return deletedProject;
   }
-
-  async addProjectObservation(observationId, projectId): Promise<void> {
-    await this.projectModel.findById(projectId).update({
-      $push: {
-        observations: observationId,
-      },
-    });
-  }
 }
-
-
