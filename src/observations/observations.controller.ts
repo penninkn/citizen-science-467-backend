@@ -1,19 +1,24 @@
+
 import {
-  Body,
-  Controller,
-  Get,
-  Delete,
-  HttpStatus,
-  NotFoundException,
-  Param,
-  Post,
-  Res,
+    Body,
+    Controller,
+    Get,
+    Put,
+    Delete,
+    HttpStatus,
+    NotFoundException,
+    Param,
+    Post,
+    Res,
 } from '@nestjs/common';
 
+import { UpdateObservationDTO } from './update-observation.dto';
+import { UpdateProjectDTO } from './../projects/update-project.dto';
 import { ObservationService } from './observations.service';
 import { CreateObservationDTO } from './create-observation.dto';
 import { ProjectService } from 'src/projects/projects.service';
 import { UsersService } from 'src/users/users.service';
+import { fromEventPattern } from 'rxjs';
 import { Observation } from './observations.schema';
 
 @Controller('observation')
@@ -78,21 +83,21 @@ export class ObservationController {
     });
   }
 
-  // @Put(':observationId')
-  // async updateObservation(
-  //   @Res() res,
-  //   @Param('observationId') observationId,
-  //   @Body() createObservationDTO: CreateObservationDTO,
-  // ) {
-  //   const updatedObservation = await this.observationService.updateObservation(
-  //     observationId,
-  //     createObservationDTO,
-  //   );
-  //   return res.status(HttpStatus.OK).json({
-  //     message: 'Project has been updated successfully',
-  //     updatedObservation,
-  //   });
-  // }
+  @Put(':observationId')
+  async updateObservation(
+    @Res() res,
+    @Param('observationId') observationId,
+    @Body() updateObservationDTO: UpdateObservationDTO,
+  ) {
+    const updatedObservation = await this.observationService.updateObservation(
+      observationId,
+      updateObservationDTO,
+    );
+    return res.status(HttpStatus.OK).json({
+      message: 'Observation has been updated successfully',
+      updatedObservation,
+    });
+  }
 
   @Post('/create')
   async addObservation(
