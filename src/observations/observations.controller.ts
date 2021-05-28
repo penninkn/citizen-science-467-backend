@@ -1,24 +1,21 @@
-
 import {
-    Body,
-    Controller,
-    Get,
-    Put,
-    Delete,
-    HttpStatus,
-    NotFoundException,
-    Param,
-    Post,
-    Res,
+  Body,
+  Controller,
+  Get,
+  Put,
+  Delete,
+  HttpStatus,
+  NotFoundException,
+  Param,
+  Post,
+  Res,
 } from '@nestjs/common';
 
 import { UpdateObservationDTO } from './update-observation.dto';
-import { UpdateProjectDTO } from './../projects/update-project.dto';
 import { ObservationService } from './observations.service';
 import { CreateObservationDTO } from './create-observation.dto';
 import { ProjectService } from 'src/projects/projects.service';
 import { UsersService } from 'src/users/users.service';
-import { fromEventPattern } from 'rxjs';
 import { Observation } from './observations.schema';
 
 @Controller('observation')
@@ -62,6 +59,7 @@ export class ObservationController {
     @Body() body,
   ): Promise<any> {
     const username = body.user;
+    console.log(username);
     const user = await this.userService.findByUsername({ username });
     const observations = await this.observationService.getObservationsByProjectAndUser(
       body.p_id,
