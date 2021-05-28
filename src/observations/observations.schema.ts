@@ -3,7 +3,6 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import { Project } from 'src/projects/project.schema';
 import * as mongoose from 'mongoose';
-import { ProcessEnvOptions } from 'node:child_process';
 
 export type ObservationDocument = Observation & Document;
 

@@ -48,7 +48,6 @@ export class UsersService {
     }
 
     const userDto: UserDto = {
-      _id: user._id,
       username: user.username,
       email: user.email,
       first_name: user.first_name,
@@ -67,8 +66,9 @@ export class UsersService {
     return false;
   }
 
-  async findByUsername({ username }: any): Promise<UserDto> {
+  async findByUsername({ username }: any): Promise<any> {
     const user = await this.userModel.findOne({ username }).exec();
+    console.log(user);
     return user;
   }
 }
