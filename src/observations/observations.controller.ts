@@ -1,15 +1,15 @@
 
 import {
-    Body,
-    Controller,
-    Get,
-    Put,
-    Delete,
-    HttpStatus,
-    NotFoundException,
-    Param,
-    Post,
-    Res,
+  Body,
+  Controller,
+  Get,
+  Put,
+  Delete,
+  HttpStatus,
+  NotFoundException,
+  Param,
+  Post,
+  Res,
 } from '@nestjs/common';
 
 import { UpdateObservationDTO } from './update-observation.dto';
@@ -27,7 +27,7 @@ export class ObservationController {
     private observationService: ObservationService,
     private projectService: ProjectService,
     private userService: UsersService,
-  ) {}
+  ) { }
 
   @Get('observations')
   async getAllObservations(@Res() res) {
@@ -66,6 +66,19 @@ export class ObservationController {
     const observations = await this.observationService.getObservationsByProjectAndUser(
       body.p_id,
       user._id,
+    );
+    return res.status(HttpStatus.OK).json(observations);
+  }
+
+  @Post('user')
+  async getObservationsByUser(
+    @Res() res,
+    @Body() body,
+  ): Promise<any> {
+    const username = body.user;
+    const user = await this.userService.findByUsername({ username });
+    const observations = await this.observationService.getObservationsByUser(
+      user._id
     );
     return res.status(HttpStatus.OK).json(observations);
   }
