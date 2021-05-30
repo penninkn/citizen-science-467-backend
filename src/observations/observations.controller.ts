@@ -59,7 +59,6 @@ export class ObservationController {
     @Body() body,
   ): Promise<any> {
     const username = body.user;
-    console.log(username);
     const user = await this.userService.findByUsername({ username });
     const observations = await this.observationService.getObservationsByProjectAndUser(
       body.p_id,

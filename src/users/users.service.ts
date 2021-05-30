@@ -5,6 +5,11 @@ import { CreateUserDTO } from './create-user.dto';
 import { UserDto } from './user.dto';
 import { User, UserDocument } from './user.schema';
 
+export interface RegistrationStatus {
+  success: boolean;
+  message: string;
+}
+
 @Injectable()
 export class UsersService {
   constructor(
@@ -21,14 +26,14 @@ export class UsersService {
 
     if (emailInDatabase) {
       throw new HttpException(
-        'A user with this email already exists',
+        'A user with this email already exists!',
         HttpStatus.BAD_REQUEST,
       );
     }
 
     if (usernameTaken) {
       throw new HttpException(
-        'Username is not available. Please choose again',
+        'Username is not available. Please try again!',
         HttpStatus.BAD_REQUEST,
       );
     }
@@ -57,18 +62,44 @@ export class UsersService {
     return userDto;
   }
 
-  async findByEmail({ email }: any): Promise<boolean> {
-    const found = await this.userModel.findOne({ email }).exec();
-    if (found) {
-      return true;
+  async findByEmail({ email }: any): Promise<any> {
+    const user = await this.userModel.findOne({ email }).exec();
+    return user;
+  }
+
+  async updateUser(userId, userDto: CreateUserDTO): Promise<any> {
+    let status: RegistrationStatus = {
+      success: true,
+      message: 'Registration successful!',
+    };
+    const { email, username } = userDto;
+    const [emailInDatabase, usernameTaken] = await Promise.all([
+      this.findByEmail({ email }),
+      this.findByUsername({ username }),
+    ]);
+
+    if (emailInDatabase?._id && emailInDatabase?._id != userId) {
+      status = {
+        success: false,
+        message: 'Sorry! This email address is already in use...',
+      };
+      return status;
     }
 
-    return false;
+    if (usernameTaken?._id && usernameTaken?._id != userId) {
+      status = {
+        success: false,
+        message: 'Sorry! This username is already taken!',
+      };
+      return status;
+    }
+
+    await this.userModel.findByIdAndUpdate(userId, userDto, { new: true });
+    return status;
   }
 
   async findByUsername({ username }: any): Promise<any> {
     const user = await this.userModel.findOne({ username }).exec();
-    console.log(user);
     return user;
   }
 }
