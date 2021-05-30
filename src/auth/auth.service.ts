@@ -28,7 +28,7 @@ export class AuthService {
     } catch (err) {
       status = {
         success: false,
-        message: 'Unable to create user. ' + err,
+        message: err,
       };
     }
     return status;

@@ -26,14 +26,14 @@ export class UsersService {
 
     if (emailInDatabase) {
       throw new HttpException(
-        'A user with this email already exists',
+        'A user with this email already exists!',
         HttpStatus.BAD_REQUEST,
       );
     }
 
     if (usernameTaken) {
       throw new HttpException(
-        'Username is not available. Please choose again',
+        'Username is not available. Please try again!',
         HttpStatus.BAD_REQUEST,
       );
     }
@@ -78,7 +78,7 @@ export class UsersService {
       this.findByUsername({ username }),
     ]);
 
-    if (emailInDatabase._id != userId) {
+    if (emailInDatabase?._id && emailInDatabase?._id != userId) {
       status = {
         success: false,
         message: 'Sorry! This email address is already in use...',
@@ -86,7 +86,7 @@ export class UsersService {
       return status;
     }
 
-    if (usernameTaken._id != userId) {
+    if (usernameTaken?._id && usernameTaken?._id != userId) {
       status = {
         success: false,
         message: 'Sorry! This username is already taken!',
