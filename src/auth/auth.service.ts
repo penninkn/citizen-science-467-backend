@@ -46,7 +46,6 @@ export class AuthService {
 
   async login(loginUserDto: LoginUserDto): Promise<any> {
     // find user in db
-    console.log(await bcrypt.hash(loginUserDto.password, 10));
     const user = await this.userService.findByLogin(
       loginUserDto.username,
       loginUserDto.password,
