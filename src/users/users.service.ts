@@ -4,6 +4,7 @@ import { Model } from 'mongoose';
 import { CreateUserDTO } from './create-user.dto';
 import { UserDto } from './user.dto';
 import { User, UserDocument } from './user.schema';
+import * as bcrypt from 'bcrypt';
 
 export interface RegistrationStatus {
   success: boolean;
@@ -47,7 +48,7 @@ export class UsersService {
       throw new HttpException('User not found', HttpStatus.UNAUTHORIZED);
     }
 
-    const areEqual = user.password === password ? true : false;
+    const areEqual = await bcrypt.compare(password, user.password);
     if (!areEqual) {
       throw new HttpException('Invalid credentials', HttpStatus.UNAUTHORIZED);
     }

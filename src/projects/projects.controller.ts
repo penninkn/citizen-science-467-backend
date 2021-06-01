@@ -9,18 +9,22 @@ import {
   Post,
   Res,
   Query,
+  UseGuards,
 } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 
 import { CreateProjectDTO } from './create-project.dto';
 import { ProjectService } from './projects.service';
 import { UpdateProjectDTO } from './update-project.dto';
 
+@UseGuards(AuthGuard())
 @Controller('project')
 export class ProjectController {
   constructor(private projectService: ProjectService) {}
 
   @Get('projects')
   async getAllProjects(@Res() res) {
+    console.log('in get projects');
     const projects = await this.projectService.getAllProjects();
     return res.status(HttpStatus.OK).json(projects);
   }

@@ -5,6 +5,7 @@ import { LoginUserDto } from 'src/users/login-user.dto';
 import { UserDto } from 'src/users/user.dto';
 import { UsersService } from 'src/users/users.service';
 import { JwtPayload } from './jwt.strategy';
+import * as bcrypt from 'bcrypt';
 
 export interface RegistrationStatus {
   success: boolean;
@@ -24,6 +25,7 @@ export class AuthService {
       message: 'Registration successful!',
     };
     try {
+      createUserDto.password = await bcrypt.hash(createUserDto.password, 10);
       await this.userService.createUser(createUserDto);
     } catch (err) {
       status = {
@@ -34,8 +36,8 @@ export class AuthService {
     return status;
   }
 
-  async validateUser(username: string): Promise<UserDto> {
-    const user = await this.userService.findByUsername(username);
+  async validateUser(payload: JwtPayload): Promise<UserDto> {
+    const user = await this.userService.findByUsername(payload);
     if (!user) {
       throw new HttpException('Invalid token', HttpStatus.UNAUTHORIZED);
     }
@@ -44,6 +46,7 @@ export class AuthService {
 
   async login(loginUserDto: LoginUserDto): Promise<any> {
     // find user in db
+    console.log(await bcrypt.hash(loginUserDto.password, 10));
     const user = await this.userService.findByLogin(
       loginUserDto.username,
       loginUserDto.password,
