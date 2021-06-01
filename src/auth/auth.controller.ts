@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import { CreateUserDTO } from 'src/users/create-user.dto';
 import { LoginUserDto } from 'src/users/login-user.dto';
+import { UpdateUserDto } from 'src/users/update-user.dto';
 import { UsersService } from 'src/users/users.service';
 import { AuthService, RegistrationStatus } from './auth.service';
 
@@ -35,12 +36,10 @@ export class AuthController {
   @Put('register/:id')
   public async editProfile(
     @Param('id') userId,
-    @Body() createUserDTO: CreateUserDTO,
+    @Body() updateUserDto: UpdateUserDto,
   ) {
-    const result: RegistrationStatus = await this.userService.updateUser(
-      userId,
-      createUserDTO,
-    );
+    const result = await this.authService.updateUser(userId, updateUserDto);
+
     if (!result.success) {
       throw new HttpException(result.message, HttpStatus.BAD_REQUEST);
     }

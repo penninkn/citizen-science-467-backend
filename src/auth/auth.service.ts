@@ -44,6 +44,24 @@ export class AuthService {
     return user;
   }
 
+  async updateUser(userId, updateUserDto) {
+    const status = await this.userService.updateUser(userId, updateUserDto);
+    if (status.success) {
+      const token = this._createToken(updateUserDto);
+
+      return {
+        success: status.success,
+        message: status.message,
+        token: token,
+      };
+    } else {
+      return {
+        success: status.success,
+        message: status.message,
+      };
+    }
+  }
+
   async login(loginUserDto: LoginUserDto): Promise<any> {
     // find user in db
     const user = await this.userService.findByLogin(
