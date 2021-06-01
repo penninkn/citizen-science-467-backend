@@ -73,6 +73,7 @@ export class UsersService {
       success: true,
       message: 'Registration successful!',
     };
+
     const { email, username } = userDto;
     const [emailInDatabase, usernameTaken] = await Promise.all([
       this.findByEmail({ email }),
@@ -101,14 +102,18 @@ export class UsersService {
 
   async findByUsername({ username }: any): Promise<any> {
     const user = await this.userModel.findOne({ username }).exec();
-    return {
-      username: user.username,
-      first_name: user.first_name,
-      last_name: user.last_name,
-      age: user.age,
-      email: user.email,
-      admin: user.admin,
-      _id: user._id,
-    };
+    if (user) {
+      return {
+        username: user.username,
+        first_name: user.first_name,
+        last_name: user.last_name,
+        age: user.age,
+        email: user.email,
+        admin: user.admin,
+        _id: user._id,
+      };
+    } else {
+      return null;
+    }
   }
 }
