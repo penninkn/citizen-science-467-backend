@@ -24,7 +24,6 @@ export class ProjectController {
 
   @Get('projects')
   async getAllProjects(@Res() res) {
-    console.log('in get projects');
     const projects = await this.projectService.getAllProjects();
     return res.status(HttpStatus.OK).json(projects);
   }
