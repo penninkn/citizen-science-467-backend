@@ -14,7 +14,11 @@ export class ObservationService {
 
   // Get all observations
   async getAllObservations(): Promise<Observation[]> {
-    const observations = await this.observationModel.find().exec();
+    const observations = await this.observationModel
+      .find()
+      .populate('user')
+      .populate('project')
+      .exec();
     return observations;
   }
 
@@ -22,6 +26,8 @@ export class ObservationService {
   async getObservation(observationID): Promise<Observation> {
     const observation = await this.observationModel
       .findById(observationID)
+      .populate('user')
+      .populate('project')
       .exec();
     return observation;
   }
@@ -55,18 +61,27 @@ export class ObservationService {
   }
 
   async getObservationsByProject(projectId) {
-    return await this.observationModel.find({ project: projectId });
+    return await this.observationModel
+      .find({ project: projectId })
+      .populate('user')
+      .populate('project');
   }
 
   //get all of a user's observations
   async getObservationsByUser(userId) {
-    return await this.observationModel.find({ user: userId });
+    return await this.observationModel
+      .find({ user: userId })
+      .populate('user')
+      .populate('project');
   }
 
   async getObservationsByProjectAndUser(projectId, userId) {
-    return await this.observationModel.find({
-      project: projectId,
-      user: userId,
-    });
+    return await this.observationModel
+      .find({
+        project: projectId,
+        user: userId,
+      })
+      .populate('user')
+      .populate('project');
   }
 }
