@@ -1,0 +1,154 @@
+h2 {
+  color: #d40d38;
+  text-align: center;
+}
+
+.center {
+  text-align: center;
+}
+
+.btn-group {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+body {
+  background-image: radial-gradient(rgba(255, 233, 91, 0.24), rgba(253, 192, 26, 0.35)), url('tree-4373601_640.png');
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
+  min-height: 100%;
+}
+
+input {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+}
+
+form {
+  width: 90%;
+  margin: auto;
+}
+
+button:focus {
+  outline: none;
+}
+
+#site-container {
+  margin: auto;
+  width: 70%;
+  padding-bottom: 40px;
+  padding-top: 40px;
+}
+
+h1 {
+  color: #0198e9;
+  text-align: center;
+}
+
+h3 {
+  text-align: center;
+  color: #d40d38;
+}
+
+h4 {
+  text-align: center;
+}
+
+.btn-round-red {
+  background-color: #d40d38;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  text-align: center;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.btn-round-red:hover {
+  background-color: #fc3761;
+}
+
+.btn-round-red:focus {
+  background-color: #fc3761;
+}
+
+.btn-round-blue {
+  background-color: #0198e9;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  text-align: center;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.btn-round-blue:hover {
+  background-color: #62c7fe;
+}
+
+.btn-round-blue:focus {
+  background-color: #62c7fe;
+}
+
+.btn-round-green {
+  background-color: #45c474;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  text-align: center;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.btn-round-green:hover {
+  background-color: #6ce89a;
+}
+
+.btn-round-green:focus {
+  background-color: #6ce89a;
+}
+
+.btn-round-purple {
+  background-color: #8d34ca;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  text-align: center;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.btn-round-purple:hover {
+  background-color: #b25eeb;
+}
+
+.btn-round-purple:focus {
+  background-color: #b25eeb;
+}
+
+.btn-round-orange {
+  background-color: #fa8225;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  text-align: center;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.btn-round-orange:hover {
+  background-color: #ffab5c;
+}
+
+.btn-round-orange:focus {
+  background-color: #ffab5c;
+}
+
+@media only screen and (max-width: 600px) {
+  #site-container {
+    width: 90%;
+  }
+}
+
+/*# sourceMappingURL=styles.css.map*/
