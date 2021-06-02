@@ -1797,7 +1797,7 @@ class UpdateObservationComponent {
             this.date = this.datepipe.transform(this.observation.date, 'yyyy-MM-dd', 'UTC');
             this.longitude = this.observation.longitude;
             this.latitude = this.observation.latitude;
-            this.backUrl = 'projects/' + this.observation.project;
+            this.backUrl = 'projects/' + this.observation.project._id;
         });
     }
     getLocation() {
