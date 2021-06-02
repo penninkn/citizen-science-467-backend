@@ -10,7 +10,7 @@ export class ObservationService {
   constructor(
     @InjectModel(Observation.name)
     private readonly observationModel: Model<ObservationDocument>,
-  ) { }
+  ) {}
 
   // Get all observations
   async getAllObservations(): Promise<Observation[]> {
@@ -54,7 +54,6 @@ export class ObservationService {
     return updatedObservation;
   }
 
-
   async getObservationsByProject(projectId) {
     return await this.observationModel.find({ project: projectId });
   }
@@ -63,7 +62,6 @@ export class ObservationService {
   async getObservationsByUser(userId) {
     return await this.observationModel.find({ user: userId });
   }
-
 
   async getObservationsByProjectAndUser(projectId, userId) {
     return await this.observationModel.find({

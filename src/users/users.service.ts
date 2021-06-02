@@ -4,6 +4,8 @@ import { Model } from 'mongoose';
 import { CreateUserDTO } from './create-user.dto';
 import { UserDto } from './user.dto';
 import { User, UserDocument } from './user.schema';
+import * as bcrypt from 'bcrypt';
+import { UpdateUserDto } from './update-user.dto';
 
 export interface RegistrationStatus {
   success: boolean;
@@ -46,8 +48,7 @@ export class UsersService {
     if (!user) {
       throw new HttpException('User not found', HttpStatus.UNAUTHORIZED);
     }
-
-    const areEqual = user.password === password ? true : false;
+    const areEqual = await bcrypt.compare(password, user.password);
     if (!areEqual) {
       throw new HttpException('Invalid credentials', HttpStatus.UNAUTHORIZED);
     }
@@ -67,11 +68,12 @@ export class UsersService {
     return user;
   }
 
-  async updateUser(userId, userDto: CreateUserDTO): Promise<any> {
+  async updateUser(userId, userDto: UpdateUserDto): Promise<any> {
     let status: RegistrationStatus = {
       success: true,
       message: 'Registration successful!',
     };
+
     const { email, username } = userDto;
     const [emailInDatabase, usernameTaken] = await Promise.all([
       this.findByEmail({ email }),
@@ -100,6 +102,18 @@ export class UsersService {
 
   async findByUsername({ username }: any): Promise<any> {
     const user = await this.userModel.findOne({ username }).exec();
-    return user;
+    if (user) {
+      return {
+        username: user.username,
+        first_name: user.first_name,
+        last_name: user.last_name,
+        age: user.age,
+        email: user.email,
+        admin: user.admin,
+        _id: user._id,
+      };
+    } else {
+      return null;
+    }
   }
 }

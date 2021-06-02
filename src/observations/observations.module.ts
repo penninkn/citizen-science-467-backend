@@ -5,6 +5,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Observation, ObservationSchema } from './observations.schema';
 import { ProjectModule } from 'src/projects/projects.module';
 import { UsersModule } from 'src/users/users.module';
+import { AuthModule } from 'src/auth/auth.module';
+import { PassportModule } from '@nestjs/passport';
 
 @Module({
   imports: [
@@ -13,6 +15,8 @@ import { UsersModule } from 'src/users/users.module';
     ]),
     ProjectModule,
     UsersModule,
+    AuthModule,
+    PassportModule,
   ],
   providers: [ObservationService],
   controllers: [ObservationController],

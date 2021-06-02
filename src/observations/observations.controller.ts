@@ -9,6 +9,7 @@ import {
   Param,
   Post,
   Res,
+  UseGuards,
 } from '@nestjs/common';
 
 import { UpdateObservationDTO } from './update-observation.dto';
@@ -17,14 +18,16 @@ import { CreateObservationDTO } from './create-observation.dto';
 import { ProjectService } from 'src/projects/projects.service';
 import { UsersService } from 'src/users/users.service';
 import { Observation } from './observations.schema';
+import { AuthGuard } from '@nestjs/passport';
 
+@UseGuards(AuthGuard())
 @Controller('observation')
 export class ObservationController {
   constructor(
     private observationService: ObservationService,
     private projectService: ProjectService,
     private userService: UsersService,
-  ) { }
+  ) {}
 
   @Get('observations')
   async getAllObservations(@Res() res) {
@@ -68,14 +71,11 @@ export class ObservationController {
   }
 
   @Post('user')
-  async getObservationsByUser(
-    @Res() res,
-    @Body() body,
-  ): Promise<any> {
+  async getObservationsByUser(@Res() res, @Body() body): Promise<any> {
     const username = body.user;
     const user = await this.userService.findByUsername({ username });
     const observations = await this.observationService.getObservationsByUser(
-      user._id
+      user._id,
     );
     return res.status(HttpStatus.OK).json(observations);
   }
